@@ -91,6 +91,37 @@
             color: #FFFFFF;
         }
 
+        /* Hamburger toggle - hidden on desktop */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1100;
+            padding: 6px;
+        }
+
+        .nav-toggle span {
+            width: 26px;
+            height: 2px;
+            background: #FFFFFF;
+            transition: .3s;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: translateY(7px) rotate(45deg);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: translateY(-7px) rotate(-45deg);
+        }
+
         /* ================= HERO ================= */
         .hero {
             min-height: 100vh;
@@ -727,37 +758,222 @@
             }
         }
 
-        /* Responsive Breakpoints */
+        /* ================================================================
+           RESPONSIVE BREAKPOINTS
+           ================================================================ */
+
+        /* ---------- Tablets & small laptops (<=992px) ---------- */
         @media (max-width: 992px) {
+            nav {
+                padding: 20px 6%;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            nav ul {
+                position: fixed;
+                top: 0;
+                right: 0;
+                height: 100vh;
+                width: min(280px, 75%);
+                background: rgba(18, 18, 18, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+                gap: 28px;
+                padding: 100px 40px;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+                border-left: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            nav ul.open {
+                transform: translateX(0);
+            }
+
+            nav ul li a {
+                font-size: 16px;
+            }
+
             .hero {
                 flex-direction: column;
                 text-align: center;
                 padding-top: 140px;
                 gap: 40px;
             }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
             .hero h1::after {
                 left: 50%;
                 transform: translateX(-50%) scaleX(0);
             }
+
+            .description {
+                margin: 0 auto;
+            }
+
             .buttons {
                 justify-content: center;
             }
-            .hero-image {
+
+            .social {
+                display: flex;
                 justify-content: center;
             }
-            .image-circle {
-                width: 300px;
-                height: 300px;
+
+            .hero-image {
+                justify-content: center;
+                order: -1;
             }
+
+            .image-circle {
+                width: 280px;
+                height: 280px;
+            }
+
             .section-heading {
                 text-align: center;
             }
+
             .projects-grid, .education-grid {
                 grid-template-columns: 1fr;
             }
+
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 40px;
+            }
+
+            section {
+                padding: 90px 6%;
+            }
+        }
+
+        /* ---------- Phones (<=600px) ---------- */
+        @media (max-width: 600px) {
+            .logo {
+                font-size: 17px;
+            }
+
+            .hero {
+                padding: 110px 6% 50px 6%;
+                gap: 30px;
+            }
+
+            .small-text {
+                font-size: 14px;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero h2 {
+                font-size: 18px;
+            }
+
+            .description {
+                font-size: 14px;
+            }
+
+            .image-circle {
+                width: 200px;
+                height: 200px;
+            }
+
+            .buttons {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 16px;
+                width: 100%;
+            }
+
+            .btn {
+                text-align: center;
+                padding: 14px 20px;
+            }
+
+            .btn-outline {
+                justify-content: center;
+            }
+
+            section {
+                padding: 70px 6%;
+            }
+
+            .section-heading h2 {
+                font-size: 26px;
+            }
+
+            .section-heading p {
+                font-size: 14px;
+            }
+
+            .about-card, .skill-card, .project-card, .education-card, .contact-item, .contact-form {
+                padding: 28px 22px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .skill-card i {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+
+            .skill-card h3 {
+                font-size: 16px;
+            }
+
+            .skill-card p {
+                font-size: 13px;
+            }
+
+            .project-card h3, .education-card h3 {
+                font-size: 19px;
+            }
+
+            .project-card p, .education-card p {
+                font-size: 14px;
+            }
+
+            .contact-item {
+                gap: 14px;
+            }
+
+            .contact-details p a {
+                font-size: 15px;
+                word-break: break-word;
+            }
+        }
+
+        /* ---------- Very small phones (<=380px) ---------- */
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .image-circle {
+                width: 170px;
+                height: 170px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            nav ul {
+                transition: none;
             }
         }
     </style>
@@ -770,7 +986,7 @@
         <div class="logo">
             SOURAV PK
         </div>
-        <ul>
+        <ul id="navMenu">
             <li><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -780,6 +996,11 @@
             <li><a href="#testimonials">Testimonials</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <!-- ================= HERO ================= -->
@@ -1113,6 +1334,26 @@
     <!-- ================= INTERACTIVE JAVASCRIPT & ACCENT GRAPHICS ENGINE ================= -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            // --- 0. MOBILE NAV TOGGLE ---
+            const navToggle = document.getElementById("navToggle");
+            const navMenu = document.getElementById("navMenu");
+
+            if (navToggle && navMenu) {
+                navToggle.addEventListener("click", () => {
+                    const isOpen = navMenu.classList.toggle("open");
+                    navToggle.classList.toggle("active", isOpen);
+                    navToggle.setAttribute("aria-expanded", isOpen);
+                });
+
+                navMenu.querySelectorAll("a").forEach(link => {
+                    link.addEventListener("click", () => {
+                        navMenu.classList.remove("open");
+                        navToggle.classList.remove("active");
+                        navToggle.setAttribute("aria-expanded", "false");
+                    });
+                });
+            }
+
             // --- 1. DYNAMIC ACCENT PARTICLE BG CANVAS ENGINE ---
             const canvas = document.getElementById("graphics-canvas");
             const ctx = canvas.getContext("2d");
