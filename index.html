@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOURAV PK | Portfolio</title>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #121212;
+            color: #FFFFFF;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ================= CANVAS ACCENT BACKGROUND ================= */
+        #graphics-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+        }
+
+        /* Ensuring layout blocks stack neatly over interactive background canvas layers */
+        nav, section {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ================= NAVBAR ================= */
+        nav {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 8%;
+            background: rgba(18, 18, 18, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #A3A3A3;
+            font-size: 14px;
+            transition: .3s;
+        }
+
+        nav ul li a:hover {
+            color: #FFFFFF;
+        }
+
+        /* ================= HERO ================= */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: row; /* Normal layout: Text left, Image right */
+            justify-content: space-between;
+            align-items: center;
+            padding: 120px 8% 60px 8%;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1.2;
+        }
+
+        .small-text {
+            color: #A3A3A3;
+            font-size: 18px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 2px;
+            background: #FFFFFF;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        .hero h2 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #A3A3A3;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            max-width: 550px;
+            color: #737373;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .buttons {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 40px;
+            flex-wrap: wrap; /* Added safety rule for responsiveness with 3 buttons */
+        }
+
+        .btn {
+            background: #FFFFFF;
+            color: #121212;
+            padding: 14px 36px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: .3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #E5E5E5;
+        }
+
+        .btn-outline {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: .3s;
+        }
+
+        .btn-outline i {
+            font-size: 18px;
+        }
+
+        .btn-outline:hover {
+            opacity: 0.8;
+        }
+
+        /* CV Download Button Specific Hover Effect */
+        .btn-cv-download i {
+            transition: transform 0.3s ease;
+        }
+        .btn-cv-download:hover i {
+            transform: translateY(2px);
+        }
+
+        .social {
+            margin-top: 50px;
+        }
+
+        .social a {
+            color: #737373;
+            margin-right: 25px;
+            font-size: 20px;
+            transition: .3s;
+        }
+
+        .social a:hover {
+            color: #FFFFFF;
+        }
+
+        /* ================= IMAGE (Circular Style Restored) ================= */
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .image-circle {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%; /* Reverts back to circular layout */
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: floatImage 6s ease-in-out infinite;
+            animation-delay: 1.4s;
+        }
+
+        .image-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%); 
+            transition: transform 0.5s ease;
+        }
+
+        .image-circle:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ================= COMMON SECTION ================= */
+        section {
+            padding: 120px 8%;
+        }
+
+        .section-heading {
+            text-align: left;
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .section-heading h2 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .section-heading p {
+            color: #737373;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        /* ================= ABOUT ================= */
+        .about {
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .about-container {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .about-card {
+            width: 100%;
+            max-width: 850px;
+            background: #121212;
+            padding: 50px;
+            border-radius: 0px;
+            transition: .4s;
+            border: 1px solid rgba(255, 255, 255, .03);
+        }
+
+        .about-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .about-card h3 {
+            margin-bottom: 25px;
+            color: #FFFFFF;
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .about-card p {
+            color: #A3A3A3;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+
+        .about-card strong {
+            color: #FFFFFF;
+        }
+
+        /* ================= SKILLS WITH DYNAMIC HOVER LAYERS ================= */
+        .skills {
+            background: #121212;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .skill-card {
+            background: #1A1A1A;
+            padding: 40px 35px;
+            text-align: left;
+            border-radius: 0px;
+            border: 1px solid rgba(255, 255, 255, .03);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease;
+            position: relative;
+            top: 0;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-6px); 
+            background: #222222;
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .skill-card i {
+            font-size: 36px;
+            color: #FFFFFF;
+            margin-bottom: 25px;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .skill-card:hover i {
+            transform: scale(1.1) rotate(3deg); 
+        }
+
+        .skill-card h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #FFFFFF;
+        }
+
+        .skill-card p {
+            color: #737373;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* ================= PROJECTS WITH HOVER ANIMATION LAYER ================= */
+        .projects {
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: #121212;
+            padding: 45px;
+            border-radius: 0px;
+            border: 1px solid rgba(255, 255, 255, .03);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                        border-color 0.4s ease, 
+                        background-color 0.4s ease;
+            position: relative;
+            top: 0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px); 
+            border-color: rgba(255, 255, 255, 0.25);
+            background: #161616;
+        }
+
+        .project-header i {
+            font-size: 40px;
+            color: #FFFFFF;
+            margin-bottom: 25px;
+            display: block;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .project-card:hover .project-header i {
+            transform: scale(1.08) rotate(3deg); 
+        }
+
+        .project-card h3 {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #FFFFFF;
+        }
+
+        .project-card p {
+            color: #A3A3A3;
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .project-tech {
+            display: flex;
+            gap: 15px;
+            color: #737373;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ================= FUTURE PROJECTS SECTION ================= */
+        .future-projects {
+            background: #121212;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* ================= EDUCATION ================= */
+        .education {
+            background: #121212;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .education-card {
+            background: #1A1A1A;
+            padding: 45px;
+            border-radius: 0px;
+            border: 1px solid rgba(255, 255, 255, .03);
+            transition: .4s;
+        }
+
+        .education-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .education-card .meta {
+            color: #737373;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .education-card h3 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+        }
+
+        .education-card p {
+            color: #A3A3A3;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        /* ================= TESTIMONIALS ================= */
+        .testimonials {
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        /* ================= CONTACT WITH FORM & ADVANCED ANIMATION ================= */
+        .contact {
+            background: #1A1A1A;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            padding-bottom: 140px;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #121212;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, .03);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), border-color 0.4s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(8px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item i {
+            font-size: 24px;
+            color: #FFFFFF;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover i {
+            transform: scale(1.15);
+        }
+
+        .contact-details h4 {
+            font-size: 14px;
+            color: #737373;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .contact-details p a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            transition: .3s;
+        }
+
+        .contact-details p a:hover {
+            color: #A3A3A3;
+        }
+
+        /* Direct Contact Interactive Form Styling */
+        .contact-form {
+            background: #121212;
+            padding: 45px;
+            border: 1px solid rgba(255, 255, 255, .03);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .contact-form:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: #737373;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            background: #1A1A1A;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            color: #FFFFFF;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .form-group input:focus, 
+        .form-group textarea:focus {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: #222222;
+        }
+
+        .form-group textarea {
+            height: 140px;
+            resize: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+            transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-submit i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover i {
+            transform: translateX(4px) translateY(-2px);
+        }
+
+        /* ================= SCROLL ANIMATIONS SYSTEM ================= */
+        @keyframes revealOnScroll {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Fallback structure tracking */
+        .js-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .js-reveal.revealed {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        @supports (animation-timeline: view()) {
+            .scroll-animate {
+                animation: revealOnScroll linear both;
+                animation-timeline: view();
+                animation-range: entry 5% cover 30%;
+            }
+        }
+
+        /* ================= HERO TEXT ENTRANCE ANIMATION ================= */
+        @keyframes textRiseIn {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+                filter: blur(4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes underlineGrow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+        }
+
+        .hero-text > * {
+            opacity: 0;
+            animation: textRiseIn 0.9s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        .hero-text .small-text  { animation-delay: 0.15s; }
+        .hero-text h1           { animation-delay: 0.35s; }
+        .hero-text h1::after    { animation: underlineGrow 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; animation-delay: 1.05s; }
+        .hero-text h2           { animation-delay: 0.55s; }
+        .hero-text .description { animation-delay: 0.75s; }
+        .hero-text .buttons     { animation-delay: 0.95s; }
+        .hero-text .social      { animation-delay: 1.15s; }
+
+        /* ================= HERO IMAGE ENTRANCE + AMBIENT ANIMATION ================= */
+        @keyframes imageRiseIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-14px); }
+        }
+
+        .hero-image .image-circle {
+            opacity: 0;
+            animation: imageRiseIn 1s cubic-bezier(0.25, 1, 0.5, 1) forwards,
+                       floatImage 6s ease-in-out infinite;
+            animation-delay: 0.3s, 1.4s;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .scroll-animate, .js-reveal, .hero-text > *, .hero-image .image-circle, .hero h1::after {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                filter: none !important;
+            }
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 140px;
+                gap: 40px;
+            }
+            .hero h1::after {
+                left: 50%;
+                transform: translateX(-50%) scaleX(0);
+            }
+            .buttons {
+                justify-content: center;
+            }
+            .hero-image {
+                justify-content: center;
+            }
+            .image-circle {
+                width: 300px;
+                height: 300px;
+            }
+            .section-heading {
+                text-align: center;
+            }
+            .projects-grid, .education-grid {
+                grid-template-columns: 1fr;
+            }
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+    </style>
+
+    <!-- Interactive Ambient Canvas Layer -->
+    <canvas id="graphics-canvas"></canvas>
+
+    <!-- ================= NAVIGATION ================= -->
+    <nav>
+        <div class="logo">
+            SOURAV PK
+        </div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#future-projects">Future Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <p class="small-text">
+                Introduction
+            </p>
+            <h1>
+                My<br>Portfolio
+            </h1>
+            <h2>
+                Python Full Stack Developer
+            </h2>
+            <p class="description">
+                Passionate about building responsive web applications using Python, Django, HTML, CSS, JavaScript and MySQL. I enjoy learning new technologies and creating minimal, highly functional digital experiences.
+            </p>
+            <div class="buttons">
+                <a href="#" class="btn">
+                    Explore Now
+                </a>
+                <a href="#contact" class="btn-outline">
+                    <i class="far fa-play-circle"></i> Contact Me
+                </a>
+                <!-- CV Download Button Addition -->
+                <a href="resume.pdf" download="Sourav_PK_Resume" class="btn-outline btn-cv-download">
+                    <i class="fas fa-arrow-down-long"></i> Download CV
+                </a>
+            </div>
+            <div class="social">
+                <a href="https://www.linkedin.com/in/sourav-p-k-024a14369?utm_source=share_via&utm_content=profile&utm_medium=member_android"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/s.o.u.r.u?igsh=MWNoOGNoeDhkc24wOA=="><i class="fab fa-instagram"></i></a>
+                <a href="mailto:SOURAV08LEADERS@gmail.com"><i class="far fa-envelope"></i></a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="image-circle">
+                <img src="newai.jpeg" alt="sourav PK">
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section id="about" class="about scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>About Me</h2>
+            <p>Get to know me better</p>
+        </div>
+        <div class="about-container">
+            <div class="about-card">
+                <h3>Who am I?</h3>
+                <p>
+                    I'm <strong>sourav pk</strong>, a passionate Python Full Stack Developer with a solid background in Mathematics. This logical foundation allows me to approach development challenges analytically.
+                </p>
+                <br>
+                <p>
+                    I enjoy designing cleanly coded, modern, and highly structured applications while continuously expanding my technical capabilities.
+                </p>
+                <br>
+                <p>
+                    My current engineering focus targets Django backend architectural patterns, core JavaScript optimization, and engineering systems that clean up complex real-world workflows.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= SKILLS WITH DYNAMIC HOVER LAYERS ================= -->
+    <section id="skills" class="skills scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Skills</h2>
+            <p>Technologies and domains I specialize in</p>
+        </div>
+        <div class="skills-grid">
+            <!-- Python -->
+            <div class="skill-card">
+                <i class="fab fa-python"></i>
+                <h3>Python</h3>
+                <p>Object-oriented scripting, dynamic system logic, and automation operations.</p>
+            </div>
+            <!-- Django -->
+            <div class="skill-card">
+                <i class="fas fa-code"></i>
+                <h3>Django</h3>
+                <p>Constructing enterprise backend layers following standard MVC patterns.</p>
+            </div>
+            <!-- HTML5 -->
+            <div class="skill-card">
+                <i class="fab fa-html5"></i>
+                <h3>HTML5</h3>
+                <p>Semantic document architecture for accessible web layouts.</p>
+            </div>
+            <!-- CSS3 -->
+            <div class="skill-card">
+                <i class="fab fa-css3-alt"></i>
+                <h3>CSS3</h3>
+                <p>Advanced page layouts utilizing modern responsive design specifications.</p>
+            </div>
+            <!-- JavaScript -->
+            <div class="skill-card">
+                <i class="fab fa-js"></i>
+                <h3>JavaScript</h3>
+                <p>Asynchronous DOM tree operations and scalable client-side logic.</p>
+            </div>
+            <!-- Bootstrap -->
+            <div class="skill-card">
+                <i class="fab fa-bootstrap"></i>
+                <h3>Bootstrap</h3>
+                <p>Rapid cross-platform layout implementation using component systems.</p>
+            </div>
+            <!-- MySQL -->
+            <div class="skill-card">
+                <i class="fas fa-database"></i>
+                <h3>MySQL</h3>
+                <p>Relational schema design, data normalization, and query tuning.</p>
+            </div>
+            <!-- Object-Oriented Programming -->
+            <div class="skill-card">
+                <i class="fas fa-cubes"></i>
+                <h3>Object-Oriented Programming</h3>
+                <p>Writing reusable modular code utilizing inheritance and encapsulation rules.</p>
+            </div>
+            <!-- Database Design -->
+            <div class="skill-card">
+                <i class="fas fa-sitemap"></i>
+                <h3>Database Design</h3>
+                <p>Structuring relational models and entity properties cleanly.</p>
+            </div>
+            <!-- Problem Solving -->
+            <div class="skill-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Problem Solving</h3>
+                <p>Resolving algorithmic complexity challenges through quantitative logic.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PROJECTS ================= -->
+    <section id="projects" class="projects scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Projects</h2>
+            <p>Recent architectural engineering work</p>
+        </div>
+        <div class="projects-grid">
+            <!-- Project 1: Garage Guide -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fas fa-car"></i>
+                    <h3>Garage Guide</h3>
+                </div>
+                <p>
+                    An enterprise-grade vehicle workshop automation platform engineered to streamline complex automotive repairs and services. The core architectural implementation features a robust booking engine that automatically tracks mechanic bay availability, logs real-time inventory management adjustments, and controls live transactional status matrices. Utilizes optimized relational database patterns to safely store service history history chains while presenting an intuitive customer scheduling interface.
+                </p>
+                <div class="project-tech">
+                    <span>Python</span>
+                    <span>Django</span>
+                    <span>MySQL</span>
+                </div>
+            </div>
+
+            <!-- Project 2: Eye Disease Detection -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fas fa-eye"></i>
+                    <h3>Eye Disease Detection</h3>
+                </div>
+                <p>
+                    An advanced computer vision application tailored for ophthalmic health analytics. Built on a clean Django architecture framework, the system accepts high-resolution ocular image inputs and leverages processed extraction pipelines to highlight potential clinical anomalies. Designed with structured algorithmic logic layers to handle data safely, it computes evaluation scores instantly, providing non-invasive screening diagnostics indices inside a highly secure browser interface.
+                </p>
+                <div class="project-tech">
+                    <span>Python</span>
+                    <span>Django</span>
+                    <span>Computer Vision</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= FUTURE PROJECTS ================= -->
+    <section id="future-projects" class="future-projects scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Future Projects</h2>
+            <p>Upcoming engineering blueprints and software concepts</p>
+        </div>
+        <div class="projects-grid">
+            <!-- Future Project 1: Portfolio Builder Web -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>Portfolio Builder Web</h3>
+                </div>
+                <p>
+                    A modular layout web engine designed to generate dynamic developer showcase portals instantly. Configured with an integrated theme matrix framework, it will utilize asynchronous components to modify section elements on the fly. The architectural system plans to include structural live previews, static file exports, and automated layout setups.
+                </p>
+                <div class="project-tech">
+                    <span>Python</span>
+                    <span>Django</span>
+                    <span>JavaScript</span>
+                </div>
+            </div>
+
+            <!-- Future Project 2: E-Commerce Platform with AI Suggestions -->
+            <div class="project-card">
+                <div class="project-header">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>AI E-Commerce Hub</h3>
+                </div>
+                <p>
+                    A next-generation digital marketplace structure incorporating predictive algorithmic matrices. The operational framework maps customer search behaviors to present smart, automated inventory recommendations instantly. Built on customized data models, it aims to deliver responsive transactional logic alongside optimized checkout management loops.
+                </p>
+                <div class="project-tech">
+                    <span>Python</span>
+                    <span>Django</span>
+                    <span>AI Logic</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= EDUCATION ================= -->
+    <section id="education" class="education scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Education</h2>
+            <p>Academic profile and specialized courses</p>
+        </div>
+        <div class="education-grid">
+            <!-- Academic Degree -->
+            <div class="education-card">
+                <div class="meta">Degree Foundation</div>
+                <h3>Bachelor of Computer Applications (BCA)</h3>
+                <p>
+                    Provides a rigorous foundation in software engineering primitives, computer architecture, data structures, and core systems design. Cultivates computational thinking patterns to engineer robust algorithms.
+                </p>
+            </div>
+
+            <!-- Specialization Course -->
+            <div class="education-card">
+                <div class="meta">Advanced Specialization</div>
+                <h3>Python Full Stack Development</h3>
+                <p>
+                    Intense technical training focusing heavily on building highly scalable distributed web applications. Core competencies cover full MVC architectural styles using Django, transactional MySQL optimization, asynchronous DOM interactions via JavaScript, and modular web interfaces.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= TESTIMONIALS ================= -->
+    <section id="testimonials" class="testimonials scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Testimonials</h2>
+            <p>Mentors' and reviewers' feedback</p>
+        </div>
+        <div class="skills-grid">
+            <!-- Testimonial 1 -->
+            <div class="skill-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <i class="fas fa-quote-left" style="font-size: 28px; margin-bottom: 15px;"></i>
+                    <div style="color: #737373; font-size: 12px;">
+                        <i class="fas fa-star" style="color: #FFFFFF; font-size: 12px; display: inline;"></i> 5.0
+                    </div>
+                </div>
+                <h3>Course Instructor Feedback</h3>
+                <p>"Demonstrates absolute mastery over Django architectural configurations. His backend optimization processes show an exceptional grasp of programmatic speed."</p>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="skill-card">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                    <i class="fas fa-quote-left" style="font-size: 28px; margin-bottom: 15px;"></i>
+                    <div style="color: #737373; font-size: 12px;">
+                        <i class="fas fa-star" style="color: #FFFFFF; font-size: 12px; display: inline;"></i> 5.0
+                    </div>
+                </div>
+                <h3>Project Reviewer Feedback</h3>
+                <p>"Sourav's logical problem-solving execution matches complex database layers effortlessly. An exceptional talent at parsing mathematical architectures into code."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= CONTACT SECTION WITH INTERACTIVE EMAIL ENGINE ================= -->
+    <section id="contact" class="contact scroll-animate js-reveal">
+        <div class="section-heading">
+            <h2>Contact</h2>
+            <p>Get in touch for engineering roles</p>
+        </div>
+        <div class="contact-container">
+            <!-- Left Info Cards Block -->
+            <div class="contact-info">
+                <!-- Phone Card -->
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <div class="contact-details">
+                        <h4>Call Directly</h4>
+                        <p><a href="tel:+918590606795">+91 85906 06795</a></p>
+                    </div>
+                </div>
+
+                <!-- Email Card -->
+                <div class="contact-item">
+                    <i class="far fa-envelope"></i>
+                    <div class="contact-details">
+                        <h4>Email Address</h4>
+                        <p><a href="mailto:sourav08leaders@gmail.com">sourav08leaders@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Interactive Form Engine Block -->
+            <form class="contact-form" action="https://formspree.io/f/sourav08leaders@gmail.com" method="POST" onsubmit="this.action='mailto:sourav08leaders@gmail.com?subject=Portfolio Message from ' + this.name.value + '&body=' + this.message.value; return true;">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email Address</label>
+                    <input type="email" id="email" name="_replyto" required placeholder="Enter your professional email address">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Write details about the project or career engineering role..."></textarea>
+                </div>
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-submit">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- ================= INTERACTIVE JAVASCRIPT & ACCENT GRAPHICS ENGINE ================= -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // --- 1. DYNAMIC ACCENT PARTICLE BG CANVAS ENGINE ---
+            const canvas = document.getElementById("graphics-canvas");
+            const ctx = canvas.getContext("2d");
+            let particles = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener("resize", resizeCanvas);
+            resizeCanvas();
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.speedX = Math.random() * 0.4 - 0.2;
+                    this.speedY = Math.random() * 0.4 - 0.2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    if (this.x > canvas.width) this.x = 0;
+                    if (this.x < 0) this.x = canvas.width;
+                    if (this.y > canvas.height) this.y = 0;
+                    if (this.y < 0) this.y = canvas.height;
+                }
+                draw() {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.15)";
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                const total = Math.min(60, Math.floor(canvas.width / 25));
+                for (let i = 0; i < total; i++) {
+                    particles.push(new Particle());
+                }
+            }
+            initParticles();
+
+            function animateBackground() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 120) {
+                            ctx.strokeStyle = `rgba(255, 255, 255, ${0.05 * (1 - dist / 120)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animateBackground);
+            }
+            animateBackground();
+
+            // --- 2. INTERACTIVE JAVASCRIPT MAGNETIC HOVER LAYER ---
+            const interactiveElements = document.querySelectorAll(".skill-card, .project-card, .contact-item");
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener("mousemove", (e) => {
+                    const rect = element.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width / 2;
+                    const y = e.clientY - rect.top - rect.height / 2;
+                    
+                    // Controlled subtle translation deflection mapping
+                    element.style.transform = `translate(${x * 0.08}px, ${y * 0.08}px) translateY(-6px)`;
+                });
+
+                element.addEventListener("mouseleave", () => {
+                    element.style.transform = "";
+                });
+            });
+
+            // --- 3. FALLBACK INTERSECTION SCROLL OBSERVER ---
+            const revealElements = document.querySelectorAll(".js-reveal");
+            const observerOptions = { threshold: 0.15, rootMargin: "0px 0px -50px 0px" };
+            
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("revealed");
+                        scrollObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            revealElements.forEach(el => scrollObserver.observe(el));
+        });
+    </script>
+</body>
+
+</html>
