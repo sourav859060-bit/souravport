@@ -102,7 +102,27 @@ nav{
 }
 .nav-links a:hover{color:var(--text);}
 .nav-links a:hover::after{width:100%;}
-.nav-toggle{display:none;}
+.nav-toggle{
+  display:none;
+  width:38px;height:38px;
+  border:1px solid var(--line-strong);
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:5px;
+  background:transparent;
+  cursor:pointer;
+  z-index:1001;
+}
+.nav-toggle span{
+  display:block;
+  width:16px;height:1.5px;
+  background:var(--text);
+  transition:transform .35s cubic-bezier(.25,1,.5,1), opacity .3s;
+}
+.nav-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
 
 /* ============ HERO ============ */
 .hero{
@@ -114,7 +134,36 @@ nav{
   padding:140px 4% 100px;
   overflow:hidden;
 }
+.hero::before, .hero::after{
+  content:'';
+  position:absolute;
+  border-radius:50%;
+  filter:blur(70px);
+  z-index:0;
+  pointer-events:none;
+}
+.hero::before{
+  width:340px;height:340px;
+  top:-60px;left:-80px;
+  background:radial-gradient(circle, rgba(207,255,4,0.14) 0%, rgba(207,255,4,0) 70%);
+  animation:floatBlob1 14s ease-in-out infinite;
+}
+.hero::after{
+  width:300px;height:300px;
+  bottom:-60px;right:-60px;
+  background:radial-gradient(circle, rgba(207,255,4,0.1) 0%, rgba(207,255,4,0) 70%);
+  animation:floatBlob2 18s ease-in-out infinite;
+}
+@keyframes floatBlob1{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(30px,40px) scale(1.15);}
+}
+@keyframes floatBlob2{
+  0%,100%{transform:translate(0,0) scale(1);}
+  50%{transform:translate(-25px,-30px) scale(1.1);}
+}
 .hero-eyebrow{
+  position:relative;
   font-family:'JetBrains Mono',monospace;
   font-size:12px;
   letter-spacing:3px;
@@ -246,8 +295,8 @@ nav{
   color:#0b0b0b;
   border-color:var(--accent);
 }
-.btn-solid:hover{transform:translateY(-3px);background:#e2ff4d;}
-.btn-ghost:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent);}
+.btn-solid:hover{transform:translateY(-3px);background:#e2ff4d;box-shadow:0 10px 30px rgba(207,255,4,0.28);}
+.btn-ghost:hover{transform:translateY(-3px);border-color:var(--accent);color:var(--accent);box-shadow:0 10px 26px rgba(207,255,4,0.14);}
 
 @keyframes riseIn{
   from{opacity:0;transform:translateY(24px);}
@@ -283,7 +332,7 @@ nav{
   gap:28px;
   white-space:nowrap;
 }
-.marquee-track span i{color:var(--accent);font-size:8px;}
+.marquee-track span i{color:var(--accent);font-size:8px;animation:pulseDot 1.8s ease-in-out infinite;}
 @keyframes scrollLeft{
   from{transform:translateX(0);}
   to{transform:translateX(-50%);}
@@ -323,7 +372,7 @@ section{
 .js-reveal.revealed{opacity:1;transform:translateY(0);}
 
 /* ============ ABOUT ============ */
-.about{background:var(--bg);}
+.about{background:radial-gradient(circle at 8% 10%, rgba(207,255,4,0.05), transparent 38%), var(--bg);}
 .about-grid{
   display:grid;
   grid-template-columns:0.9fr 1.4fr;
@@ -447,7 +496,7 @@ section{
 }
 
 /* ============ CURRENTLY BUILDING ============ */
-.building{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.building{background:radial-gradient(circle at 92% 15%, rgba(207,255,4,0.05), transparent 40%), var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .build-card{
   border:1px solid var(--line-strong);
   background:var(--bg);
@@ -486,6 +535,8 @@ section{
   background:var(--accent);
   animation:pulseDot 1.6s ease-in-out infinite;
 }
+.build-status.planned{color:var(--muted);border-color:var(--line-strong);}
+.build-status.planned .status-dot{background:var(--muted);animation:none;}
 @keyframes pulseDot{
   0%,100%{opacity:1;transform:scale(1);}
   50%{opacity:.4;transform:scale(.7);}
@@ -552,7 +603,7 @@ section{
   position:relative;
   transition:background .4s;
 }
-.project-card:hover{background:var(--panel);}
+.project-card:hover{background:var(--panel);box-shadow:inset 0 0 0 1px rgba(207,255,4,0.25);}
 .project-index{
   font-family:'JetBrains Mono',monospace;
   font-size:12px;
@@ -615,7 +666,9 @@ section{
   transition:transform .4s cubic-bezier(.25,1,.5,1), background .4s;
   position:relative;
 }
-.skill-card:hover{background:var(--panel-2);z-index:2;}
+.skill-card:hover{background:var(--panel-2);z-index:2;box-shadow:inset 0 0 0 1px rgba(207,255,4,0.2);}
+.skill-card:hover i{transform:scale(1.15);}
+.skill-card i{transition:transform .35s cubic-bezier(.25,1,.5,1);}
 .skill-card i{font-size:26px;color:var(--accent);margin-bottom:20px;display:block;}
 .skill-card h3{font-family:'Space Grotesk',sans-serif;font-weight:600;text-transform:none;font-size:16px;margin-bottom:8px;letter-spacing:0;}
 .skill-card p{color:var(--muted-2);font-size:13px;line-height:1.6;}
@@ -641,7 +694,7 @@ section{
 .edu-item p{color:var(--muted);font-size:15px;line-height:1.75;max-width:640px;}
 
 /* ============ CONTACT ============ */
-.contact{background:var(--panel);border-top:1px solid var(--line);}
+.contact{background:radial-gradient(circle at 15% 85%, rgba(207,255,4,0.05), transparent 40%), var(--panel);border-top:1px solid var(--line);}
 .contact-big{
   font-size:clamp(48px,9vw,120px);
   line-height:0.95;
@@ -731,13 +784,39 @@ footer{
 }
 
 @media (max-width:900px){
-  .nav-links{display:none;}
+  .nav-links{
+    position:fixed;
+    top:73px;left:0;right:0;
+    flex-direction:column;
+    gap:0;
+    background:rgba(11,11,11,0.97);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .45s cubic-bezier(.25,1,.5,1);
+  }
+  .nav-links.open{max-height:420px;}
+  .nav-links li{width:100%;}
+  .nav-links a{
+    display:block;
+    padding:18px 6%;
+    border-bottom:1px solid var(--line);
+    font-size:12px;
+  }
+  .nav-toggle{display:flex;}
+  .hero{min-height:auto;padding:110px 5% 70px;justify-content:flex-start;gap:0;}
+  .hero-eyebrow{margin-bottom:6px;}
+  .hero-stage{margin:10px -4% 6px;min-height:clamp(190px,58vw,320px);}
+  .hero-name{font-size:clamp(58px,20vw,110px);}
+  .hero-photo{top:50%;height:clamp(150px,44vw,220px);}
+  .hero-role{margin-top:18px;}
+  .hero-cta{margin-top:32px;}
   .about-grid, .contact-grid, .build-card{grid-template-columns:1fr;}
   .build-meta{border-left:none;padding-left:0;border-top:1px solid var(--line-strong);padding-top:30px;}
   .edu-item{grid-template-columns:1fr;gap:10px;}
   .form-row{grid-template-columns:1fr;}
   .hero-name{-webkit-text-stroke:1px rgba(242,242,237,0.9);transform:scaleX(1.05);}
-  .hero-photo{top:48%;height:clamp(180px,42vw,260px);}
 }
 </style>
 </head>
@@ -747,15 +826,19 @@ footer{
 
 <nav>
   <div class="nav-logo">SOURAV<span>.</span>PK</div>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#building">Building</a></li>
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#future">Up Next</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- ================= HERO ================= -->
@@ -770,7 +853,7 @@ footer{
   <p class="hero-role">Python Full Stack Developer — building <strong>Django</strong> backends &amp; clean <strong>web interfaces</strong></p>
   <div class="hero-cta">
     <a href="#projects" class="btn btn-solid">View Work <i class="fas fa-arrow-right"></i></a>
-    <a href="Sourav_PK_Resume (7).pdf" download="Sourav_PK_Resume" class="btn btn-ghost">Download CV <i class="fas fa-arrow-down-long"></i></a>
+    <a href="resume.pdf" download="Sourav_PK_Resume" class="btn btn-ghost">Download CV <i class="fas fa-arrow-down-long"></i></a>
   </div>
 </section>
 
@@ -925,9 +1008,38 @@ footer{
   </div>
 </section>
 
+<!-- ================= FUTURE PROJECT ================= -->
+<section class="building" id="future">
+  <div class="section-tag">05 / Up Next</div>
+  <h2 class="section-title js-reveal">What's on the roadmap.</h2>
+  <div class="build-card js-reveal">
+    <div>
+      <div class="build-status planned"><span class="status-dot"></span> Planned</div>
+      <h3>AI E-Commerce Hub</h3>
+      <p>A Django-powered e-commerce platform with AI baked into the shopping experience — smart product recommendations, an AI search/chat assistant for finding items faster, and automated product descriptions from listing data.</p>
+      <p>Next up: mapping out the catalog and order schema in MySQL, then layering in the recommendation engine and assistant on top of a standard cart-and-checkout flow.</p>
+    </div>
+    <div class="build-meta">
+      <div class="build-meta-row">
+        <h4>Planned Stack</h4>
+        <div class="build-tags"><span>Python</span><span>Django</span><span>MySQL</span><span>AI / LLM APIs</span></div>
+      </div>
+      <div class="build-meta-row">
+        <h4>Planned Focus</h4>
+        <div class="build-tags"><span>Recommendations</span><span>AI Search</span><span>Smart Listings</span></div>
+      </div>
+      <div class="build-meta-row">
+        <h4>Status</h4>
+        <div class="progress-track"><div class="progress-fill" style="width:10%;"></div></div>
+        <div class="progress-label">Scoping architecture &amp; data model</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= SKILLS ================= -->
 <section class="skills" id="skills">
-  <div class="section-tag">05 / Toolkit</div>
+  <div class="section-tag">06 / Toolkit</div>
   <div class="skills-grid">
     <div class="skill-card"><i class="fab fa-python"></i><h3>Python</h3><p>Core logic, scripting &amp; automation.</p></div>
     <div class="skill-card"><i class="fas fa-code"></i><h3>Django</h3><p>MVC backend architecture.</p></div>
@@ -942,10 +1054,10 @@ footer{
 
 <!-- ================= EDUCATION ================= -->
 <section class="education" id="education">
-  <div class="section-tag">06 / Education</div>
+  <div class="section-tag">07 / Education</div>
   <div class="edu-list">
     <div class="edu-item js-reveal">
-      <div class="meta">2023 — 2026</div>
+      <div class="meta">2023 — Ongoing</div>
       <div>
         <h3>Bachelor of Computer Applications (BCA)</h3>
         <p>Leaders College — software engineering fundamentals, data structures and computational thinking.</p>
@@ -977,7 +1089,7 @@ footer{
 
 <!-- ================= CONTACT ================= -->
 <section class="contact" id="contact">
-  <div class="section-tag">07 / Contact</div>
+  <div class="section-tag">08 / Contact</div>
   <h2 class="contact-big js-reveal">Let's build<br>some<span>thing.</span></h2>
   <div class="contact-grid">
     <div class="contact-info js-reveal">
@@ -1026,6 +1138,32 @@ footer{
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---- 0a. Mobile hamburger nav toggle ---- */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks){
+    navToggle.addEventListener('click', () => {
+      navToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+    });
+    navLinks.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        navToggle.classList.remove('open');
+        navLinks.classList.remove('open');
+      });
+    });
+  }
+
+  /* ---- 0b. Stagger reveal delays for grid items ---- */
+  document.querySelectorAll('.projects-grid, .skills-grid, .about-grid > div:first-child').forEach(grid => {
+    Array.from(grid.children).forEach((child, i) => {
+      if (child.classList.contains('js-reveal') || child.classList.contains('about-stat')){
+        child.classList.add('js-reveal');
+        child.style.transitionDelay = (i * 0.08) + 's';
+      }
+    });
+  });
 
   /* ---- 0. Split hero wordmark into letters for interactive hover ---- */
   const heroName = document.getElementById('heroName');
